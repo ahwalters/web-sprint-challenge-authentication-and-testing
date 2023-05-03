@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
         req.decodedJwt = decodedToken
         console.log('decoded token', req.decodedJwt)
 
-        next()
+        next();
       }
     })
   } else {

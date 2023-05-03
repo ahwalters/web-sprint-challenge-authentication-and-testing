@@ -90,7 +90,7 @@ router.post('/login', async (req, res) => {
           if (user && bycrpt.compareSync(password, user.password)) {
             req.session.user = user;
             const token = generateToken(user);
-            res.json({
+            res.status(200).json({
               message : `welcome, ${username}`,
               token
             })
