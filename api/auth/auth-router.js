@@ -39,8 +39,8 @@ router.post('/register', async (req, res) => {
     } else {
       const hash = bycrpt.hashSync(password, 8)
       const newUser = {username, password: hash}
-      const validUsername = await db('users').where('username', username).first()
-        if (validUsername) {
+      const usernameExists = await db('users').where('username', username).first()
+        if (!usernameExists) {
           const result = await db('users').insert(newUser)
           res.status(201).json(result)
         } else {
