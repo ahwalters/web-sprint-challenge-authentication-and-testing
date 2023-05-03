@@ -43,7 +43,8 @@ router.post('/register', async (req, res) => {
       const usernameExists = await db('users').where('username', username).first()
         if (!usernameExists) {
           const result = await db('users').insert(newUser)
-          res.status(201).json(result[0])
+          const foundUser = await db('users').where('id', result[0]).first()
+          res.status(201).json(foundUser)
         } else {
         res.status(409).json({message : "username taken"})
         }
