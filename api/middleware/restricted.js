@@ -1,14 +1,18 @@
 module.exports = (req, res, next) => {
-  next();
-  /*
-    IMPLEMENT
+  const token = req.headers.authorization
 
-    1- On valid token in the Authorization header, call next.
+  if (token) {
+    jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+      if (err) {
+        next({ status: 401, message: "token invalid" })
+      } else {
+        req.decodedJwt = decodedToken
+        console.log('decoded token', req.decodedJwt)
 
-    2- On missing token in the Authorization header,
-      the response body should include a string exactly as follows: "token required".
-
-    3- On invalid or expired token in the Authorization header,
-      the response body should include a string exactly as follows: "token invalid".
-  */
+        next()
+      }
+    })
+  } else {
+    next({ status: 401, message: 'token required' })
+  }
 };

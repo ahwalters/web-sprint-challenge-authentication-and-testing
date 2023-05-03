@@ -95,11 +95,11 @@ router.post('/login', async (req, res) => {
               token
             })
           } else {
-            res.json('invalid credentials');
+            res.status(404).json('invalid credentials');
           }
         }
       } catch (err){
-        res.end('implement register, please!');
+        res.sendStatus(500);
         }
 });
 
