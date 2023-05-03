@@ -83,13 +83,13 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
       const {username, password} = req.body
+      console.log('fired')
       try {
         if (!username || !password) {
           res.status(400).json({message : "username and password required"})
         } else {
           const [user] = await db('users').where('username', username)
           if (user && bycrpt.compareSync(password, user.password)) {
-            req.session.user = user;
             const token = generateToken(user);
             res.status(200).json({
               message : `welcome, ${username}`,
@@ -100,6 +100,7 @@ router.post('/login', async (req, res) => {
           }
         }
       } catch (err){
+        console.log(err)
         res.sendStatus(500);
       }
 });
