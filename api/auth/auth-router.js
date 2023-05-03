@@ -43,7 +43,7 @@ router.post('/register', async (req, res) => {
       const usernameExists = await db('users').where('username', username).first()
         if (!usernameExists) {
           const result = await db('users').insert(newUser)
-          res.status(201).json(newUser)
+          res.status(201).json(result)
         } else {
         res.status(409).json({message : "username taken"})
         }
@@ -100,7 +100,7 @@ router.post('/login', async (req, res) => {
         }
       } catch (err){
         res.sendStatus(500);
-        }
+      }
 });
 
 function generateToken(user) {
