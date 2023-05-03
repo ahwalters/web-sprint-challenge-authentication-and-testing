@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bycrpt = require('bcryptjs')
 const db = require('../../data/dbConfig')
+const jwt = require('jsonwebtoken')
 
 // router.post('/register', (req, res) => {
 //   res.end('implement register, please!');
@@ -93,10 +94,12 @@ router.post('/login', async (req, res) => {
               message : `welcome, ${username}`,
               token
             })
+          } else {
+            res.json('invalid credentials');
           }
         }
       } catch (err){
-          res.json('invalid credentials');
+        res.end('implement register, please!');
         }
 });
 
